@@ -111,6 +111,9 @@ Requires webpack-dev-server to be running
             position: absolute;
 
             text-align: center;
+            background-color: #a4dff3;
+            min-width: 600px;
+            min-height: 600px;
         }
 
         /* Style the image inside the centered container, if needed */
@@ -123,14 +126,7 @@ Requires webpack-dev-server to be running
 </head>
 <body>
 <div id="app">
-    <div class="split left">
-        <div id="root"></div>
-    </div>
-
-    <div class="split right">
-        <div class="centered">
-        </div>
-    </div>
+    <div id="root"></div>
 </div>
 
 <script src="__dist__/index.js"></script>

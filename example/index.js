@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import FormBuilderDragAndDrop from '../src';
-import {fields} from './fixtures';
+import { fields } from './fixtures';
 
 
 import './style.less';
