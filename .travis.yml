@@ -1,0 +1,16 @@
+language: node_js
+node_js:
+  - "stable"
+cache: npm
+script:
+  - npm run lint
+  - npm run test:ci
+  - npm run build
+  - npm run build:deploy
+deploy:
+  provider: surge
+  skip_cleanup: true
+  domain: form-builder-js-drag-and-drop.surge.sh
+  project: ./deploy/builds/
+on:
+  branch: master

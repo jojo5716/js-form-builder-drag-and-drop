@@ -1,0 +1,24 @@
+{
+    "fileExtensions": [".less", ".css"],
+
+    "excludedFiles": ["vendor.less"],
+
+    "spaceAroundComma": {
+        "allowNewline" : true
+    },
+
+    "spaceAfterPropertyColon": {
+        "enabled": true,
+        "style": "one_space"
+    },
+
+    "emptyRule": true,
+
+    "importantRule": true,
+
+    "decimalZero" : "none",
+
+    "zeroUnit": {
+        "style": "no_unit"
+    }
+}
