@@ -7,7 +7,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 
 import { fields, form } from '../example/fixtures';
-import FormBuilder from '../src';
+import FormBuilderDragAndDrop from '../src';
 
 
 describe('FormBuilder', () => {
@@ -17,7 +17,7 @@ describe('FormBuilder', () => {
 
     beforeEach(() => {
         fieldFixtures = [...fields];
-        wrapper = mount(<FormBuilder fields={fieldFixtures} form={form}/>);
+        wrapper = mount(<FormBuilderDragAndDrop fields={fieldFixtures} form={form}/>);
     });
 
     describe('Render element', () => {
@@ -26,7 +26,7 @@ describe('FormBuilder', () => {
         });
 
         it('Dont render anything if fields prop is not an array', () => {
-            wrapper = mount(<FormBuilder fields={{}}/>);
+            wrapper = mount(<FormBuilderDragAndDrop fields={{}}/>);
 
             expect(wrapper.find('form').length).toEqual(0);
         });
@@ -43,19 +43,19 @@ describe('FormBuilder', () => {
                     <button onClick={onSubmit}>Custom submit form</button>
                 </div>
             );
-            wrapper = mount(<FormBuilder fields={fieldFixtures} container={Container}/>);
+            wrapper = mount(<FormBuilderDragAndDrop fields={fieldFixtures} container={Container}/>);
 
             expect(wrapper.find('.container-form').length).toEqual(1);
         });
 
         it('Default container', () => {
-            wrapper = mount(<FormBuilder fields={fieldFixtures} container={null}/>);
+            wrapper = mount(<FormBuilderDragAndDrop fields={fieldFixtures} container={null}/>);
             expect(wrapper.find('EMPTY_CONTAINER').length).toEqual(9);
             expect(wrapper.find('EMPTY_FIELD_CONTAINER').length).toEqual(11);
         });
 
         it('Submit button', () => {
-            wrapper = mount(<FormBuilder fields={fieldFixtures} showSubmitButton={false}/>);
+            wrapper = mount(<FormBuilderDragAndDrop fields={fieldFixtures} showSubmitButton={false}/>);
 
             expect(wrapper.find('input[type="submit"]').length).toEqual(0);
         });
@@ -67,7 +67,7 @@ describe('FormBuilder', () => {
 
             it('Invalid type dont will be rendered', () => {
                 const newForm = [...fieldFixtures, { type: 'invalid-type' }];
-                wrapper = mount(<FormBuilder fields={newForm} showSubmitButton={false}/>);
+                wrapper = mount(<FormBuilderDragAndDrop fields={newForm} showSubmitButton={false}/>);
 
                 expect(wrapper.find('input').length).toEqual(10);
             });
@@ -83,7 +83,7 @@ describe('FormBuilder', () => {
                     value: 'Jhon',
                 }];
 
-                wrapper = mount(<FormBuilder fields={customFields} onSuccess={onSuccessMock} hasToSubmit={false}/>);
+                wrapper = mount(<FormBuilderDragAndDrop fields={customFields} onSuccess={onSuccessMock} hasToSubmit={false}/>);
 
                 const buttonElement = wrapper.find('button');
 
@@ -105,8 +105,8 @@ describe('FormBuilder', () => {
                     value: '',
                 }];
 
-                FormBuilder.prototype.isValidForm = () => false;
-                wrapper = mount(<FormBuilder fields={fieldsProps} onSubmit={onSubmitMock} hasToSubmit={false}/>);
+                FormBuilderDragAndDrop.prototype.isValidForm = () => false;
+                wrapper = mount(<FormBuilderDragAndDrop fields={fieldsProps} onSubmit={onSubmitMock} hasToSubmit={false}/>);
 
                 const buttonElement = wrapper.find('button');
 
@@ -127,9 +127,9 @@ describe('FormBuilder', () => {
                     value: '',
                 }];
 
-                FormBuilder.prototype.isValidForm = () => false;
+                FormBuilderDragAndDrop.prototype.isValidForm = () => false;
                 wrapper = mount(
-                    <FormBuilder
+                    <FormBuilderDragAndDrop
                         fields={fieldsProps}
                         onSubmit={onSubmitMock}
                         hasToSubmit={false}

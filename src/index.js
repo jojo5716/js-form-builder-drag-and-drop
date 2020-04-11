@@ -1,3 +1,3 @@
-import FormBuilder from './FormBuilder';
+import FormBuilderDragAndDrop from './FormBuilderDragAndDrop';
 
-export default FormBuilder;
+export default FormBuilderDragAndDrop;

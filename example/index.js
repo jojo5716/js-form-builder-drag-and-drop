@@ -2,12 +2,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import FormBuilder from '../src';
+import FormBuilderDragAndDrop from '../src';
+import {fields} from './fixtures';
+
 
 import './style.less';
 
 ReactDOM.render(
-    <FormBuilder
-    />,
+    <FormBuilderDragAndDrop fields={fields}/>,
     document.getElementById('root'),
 );
