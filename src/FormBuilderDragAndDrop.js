@@ -2,25 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import FormBuilder from 'js-form-builder';
 
-
-const FieldDraggableContainer = ({ label, id, children, onDragStart, name }) => (
-    <div
-        id={`field-draggable-${id}-${name}`}
-        className='draggableField'
-        draggable='true'
-        onDragStart={onDragStart}
-    >
-        <label>{label}</label>
-        {children}
-    </div>
-);
-
-const FieldContainer = ({ label, children }) => (
-    <div>
-        <label>{label}</label>
-        {children}
-    </div>
-);
+import {
+    FieldDraggableContainer,
+    FieldContainer,
+    formErrorContainer,
+} from './views/fields.jsx';
+import {
+    setDragStateInformation,
+    changeElementColor,
+} from './helpers';
 
 
 class FormBuilderDragAndDrop extends React.Component {
@@ -36,14 +26,8 @@ class FormBuilderDragAndDrop extends React.Component {
     }
 
     onDragStart(event) {
-        event
-            .dataTransfer
-            .setData('text/plain', event.target.id);
-
-        event
-            .currentTarget
-            .style
-            .backgroundColor = 'yellow';
+        setDragStateInformation(event);
+        changeElementColor(event, 'yellow');
     }
 
     onDragOver(event) {
@@ -54,6 +38,9 @@ class FormBuilderDragAndDrop extends React.Component {
         const id = event.dataTransfer.getData('text');
         const fieldName = id.split('-').slice(-1)[ 0 ];
         const field = this.props.fields.find(fieldData => fieldData.name === fieldName);
+        const draggableElement = document.getElementById(id);
+
+        changeElementColor({ currentTarget: draggableElement });
 
         this.setState({
             fields: [
@@ -66,7 +53,6 @@ class FormBuilderDragAndDrop extends React.Component {
                 },
             ],
         });
-
     }
 
     renderFormBuilder(fields, setAsDraggable = true) {
@@ -92,6 +78,8 @@ class FormBuilderDragAndDrop extends React.Component {
                 fields={fieldsToDisplay}
                 createFormElement={false}
                 fieldContainer={fieldContainer}
+                formErrorContainer={formErrorContainer}
+                hasToSubmit={false}
             />
         );
     }
