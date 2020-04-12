@@ -1,8 +1,26 @@
 import React from 'react';
+import FormBuilder from 'js-form-builder';
+import {
+    FieldContainer,
+    groupContainer,
+    fieldGroupContainer,
+} from '../views/forms/settings.jsx';
+
+const fieldSettingsMap = require('./settings');
 
 class FieldSettings extends React.Component {
     renderFieldSettings() {
-        return <h1>field</h1>
+        const { element, type } = this.props;
+        const calculateFieldSettings = fieldSettingsMap[ element ][ type ] || fieldSettingsMap[ element ].default;
+        const fieldSettings = calculateFieldSettings(this.props);
+
+        return (
+            <FormBuilder
+                fields={fieldSettings}
+                fieldContainer={FieldContainer}
+                groupContainer={groupContainer}
+            />
+        );
     }
 
     render() {
@@ -12,7 +30,7 @@ class FieldSettings extends React.Component {
         return (
             <React.Fragment>
                 <h1>Field settings</h1>
-                <sma>({title})</sma>
+                <small>({title})</small>
                 {hasFieldSelected ? this.renderFieldSettings() : null}
             </React.Fragment>
         );
