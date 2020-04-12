@@ -3,6 +3,7 @@ import FormBuilder from 'js-form-builder';
 import {
     FieldContainer,
     groupContainer,
+    fieldGroupContainer,
 } from '../views/forms/settings.jsx';
 
 const fieldSettingsMap = require('./settings');
@@ -18,6 +19,7 @@ class FieldSettings extends React.Component {
                 fields={fieldSettings}
                 fieldContainer={FieldContainer}
                 groupContainer={groupContainer}
+                fieldGroupContainer={fieldGroupContainer}
             />
         );
     }

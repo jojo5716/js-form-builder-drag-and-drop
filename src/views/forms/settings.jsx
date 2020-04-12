@@ -18,7 +18,7 @@ export const FieldContainer = ({ label, children, helpText }) => (
  * Render fields group into a custom html block.
  */
 export const fieldGroupContainer = ({ children, label }) => (
-    <div className="form-group">
+    <div className="row">
         {label}
         {children}
     </div>
