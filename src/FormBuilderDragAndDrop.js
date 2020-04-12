@@ -39,6 +39,7 @@ class FormBuilderDragAndDrop extends React.Component {
 
         this.setState({
             fieldDragging: field,
+            fieldSelected: null,
         });
 
         setDragStateInformation(event);
@@ -47,9 +48,12 @@ class FormBuilderDragAndDrop extends React.Component {
 
     onDragOver(event) {
         event.preventDefault();
+        event.stopPropagation();
     }
 
     onDrop(event) {
+        event.preventDefault();
+
         const elementID = event.dataTransfer.getData('text');
         const field = this.state.fieldDragging;
 

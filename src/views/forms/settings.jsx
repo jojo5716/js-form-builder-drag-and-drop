@@ -38,9 +38,9 @@ export const formErrorContainer = ({ children }) => (
  */
 export const groupContainer = ({ children, title, content }) => (
     <div className="form-row">
-            <legend>{title}</legend>
-            <p>{content}</p>
+        <legend>{title}</legend>
+        <p>{content}</p>
         {children}
-
     </div>
 );
+

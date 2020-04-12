@@ -1,11 +1,11 @@
-module.exports = ({ name }) => ([
+module.exports = ({ name, value }) => ([
     {
         title: 'Basic',
         fields: [
-            {
+           [ {
                 element: 'input',
                 type: 'text',
-                name: `settings_${name}`,
+                name: `settings_name_${name}`,
                 value: name,
                 className: 'form-control',
                 placeholder: 'Write unique field name',
@@ -21,6 +21,51 @@ module.exports = ({ name }) => ([
                 className: 'form-control',
                 label: 'Is input field required?',
                 helpText: 'helpText',
+            },
+            {
+                element: 'input',
+                type: 'number',
+                name: `settings_max_length_${name}`,
+                checked: value,
+                className: 'form-control',
+                label: 'Max length?',
+                placeholder: 'Max length',
+            },],
+            {
+                element: 'input',
+                type: 'number',
+                name: `settings_min_length_${name}`,
+                checked: value,
+                className: 'form-control',
+                label: 'Min length?',
+                placeholder: 'Max length',
+            },
+            {
+                element: 'input',
+                type: 'text',
+                name: `settings_pattern_${name}`,
+                checked: value,
+                className: 'form-control',
+                label: 'Pattern',
+                placeholder: 'Pattern',
+            },
+            {
+                element: 'input',
+                type: 'text',
+                name: `settings_placeholder_${name}`,
+                checked: value,
+                className: 'form-control',
+                label: 'Placeholder',
+                placeholder: 'Placeholder',
+            },
+            {
+                element: 'input',
+                type: 'checkbox',
+                name: `settings_readonly_${name}`,
+                checked: value,
+                className: 'form-control',
+                label: 'Placeholder',
+                placeholder: 'Placeholder',
             },
         ],
     },
