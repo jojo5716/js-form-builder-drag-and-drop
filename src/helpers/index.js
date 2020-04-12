@@ -29,7 +29,7 @@ function restoreElementColor(elementID) {
 function getElementById(fields, elementID) {
     const fieldName = elementID.split('-').slice(-1)[ 0 ];
 
-    return findFieldByNameInGroups(fields, fieldName)[0];
+    return findFieldByNameInGroups(fields, fieldName).find(x => x);
 
 }
 

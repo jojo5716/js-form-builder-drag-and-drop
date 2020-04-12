@@ -1,7 +1,15 @@
 import React from 'react';
 
 
-export const FieldDraggableContainer = ({ label, id, children, onDragStart, name }) => (
+export const FieldDraggableContainer = (
+    {
+        label,
+        id,
+        children,
+        onDragStart,
+        name,
+    },
+) => (
     <div
         id={`field-draggable-${id}-${name}`}
         className='draggableField'
@@ -10,6 +18,7 @@ export const FieldDraggableContainer = ({ label, id, children, onDragStart, name
     >
         <label>{label}</label>
         {children}
+
     </div>
 );
 

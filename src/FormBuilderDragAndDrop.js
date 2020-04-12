@@ -73,7 +73,6 @@ class FormBuilderDragAndDrop extends React.Component {
         this.setState({
             fieldSelected: findFieldByName(this.state.fields, fieldName),
         });
-
     }
 
     renderFormBuilder(fields, setAsDraggable = true) {
