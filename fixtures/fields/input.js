@@ -32,4 +32,15 @@ module.exports = [
         placeholder: 'Color',
         required: true,
     },
+    {
+        id: 'input_number',
+        element: 'input',
+        type: 'number',
+        name: 'input_number',
+        value: '',
+        minLength: 4,
+        className: 'form-control',
+        placeholder: 'Number',
+        required: true,
+    },
 ];

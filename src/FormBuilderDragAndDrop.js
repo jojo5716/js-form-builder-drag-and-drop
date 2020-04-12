@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import FormBuilder from 'js-form-builder';
 
-import FieldSettings from './FieldSettings';
+import FieldSettings from './views/FieldSettings';
 import {
     FieldDraggableContainer,
     FieldContainer,
     formErrorContainer,
     groupContainer,
-} from './views/fields.jsx';
+} from './views/forms/fields.jsx';
 import {
     setDragStateInformation,
     changeElementColor,
@@ -113,6 +113,7 @@ class FormBuilderDragAndDrop extends React.Component {
     }
 
     renderPage() {
+        const fieldsStringify = JSON.stringify(this.state.fields, undefined, 2);
         return (
             <div className="flex-row-container">
                 <div className="flex-row-item">
@@ -122,7 +123,15 @@ class FormBuilderDragAndDrop extends React.Component {
                     {this.renderFormBuilder(this.state.fields, false)}
                 </div>
                 <div className="flex-row-item">
-                    {this.state.fieldSelected ? <FieldSettings {...this.state.fieldSelected}/> : null}
+                    <div className="half-containers">
+                        <FieldSettings {...this.state.fieldSelected}/>
+
+                    </div>
+                    <div className="half-containers">
+                        <div className="fields-stringify">
+                            <pre>{fieldsStringify}</pre>
+                        </div>
+                    </div>
                 </div>
             </div>
         );

@@ -119,6 +119,8 @@ textarea {
 .flex-row-container > .flex-row-item {
   flex: 1 1 30%; /*grow | shrink | basis */
   height: 100vh;
+  min-height: min-content; /* needs vendor prefixes */
+
 }
 
 .flex-row-item {
@@ -150,3 +152,19 @@ textarea {
   }
 }
 
+.half-containers {
+  flex: 0 0 100%;
+  max-height: 50%;
+  min-height: 50%;
+  max-width: 100%;
+  background: #0BDA51;
+  border: 1px solid red;
+  padding: .5em;
+  overflow: hidden;
+}
+
+.fields-stringify pre {
+  position: absolute;
+  height: 48%;
+  width: 32%;
+}
