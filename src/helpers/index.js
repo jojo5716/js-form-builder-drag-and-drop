@@ -15,7 +15,6 @@ function setDragStateInformation(event) {
 
 function changeElementColor(event, color = 'red') {
     event /* eslint-disable-line no-param-reassign */
-        .currentTarget
         .style
         .backgroundColor = color;
 }
@@ -23,11 +22,11 @@ function changeElementColor(event, color = 'red') {
 function restoreElementColor(elementID) {
     const draggableElement = document.getElementById(elementID);
 
-    changeElementColor({ currentTarget: draggableElement });
+    changeElementColor( draggableElement );
 }
 
 function getElementById(fields, elementID) {
-    const fieldName = elementID.split('-').slice(-1)[ 0 ];
+    const fieldName = elementID.split('-').slice(-1)[0];
 
     return findFieldByNameInGroups(fields, fieldName).find(x => x);
 

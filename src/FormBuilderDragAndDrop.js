@@ -31,6 +31,7 @@ class FormBuilderDragAndDrop extends React.Component {
         this.onDragOver = this.onDragOver.bind(this);
         this.onDrop = this.onDrop.bind(this);
         this.onClickField = this.onClickField.bind(this);
+        this.onChangeFieldSetting = this.onChangeFieldSetting.bind(this);
     }
 
     onDragStart(event) {
@@ -43,21 +44,32 @@ class FormBuilderDragAndDrop extends React.Component {
         });
 
         setDragStateInformation(event);
-        changeElementColor(event, 'yellow');
+        changeElementColor(event.currentTarget, 'yellow');
     }
 
     onDragOver(event) {
         event.preventDefault();
-        event.stopPropagation();
+
+        return false;
+    }
+
+    onDragLeave(event) {
+        event.preventDefault();
+
+        if (event.target.className.indexOf('dynamicForm') !== -1) {
+            event.target.style.background = "blue";
+        }
     }
 
     onDrop(event) {
         event.preventDefault();
+        event.stopPropagation();
 
         const elementID = event.dataTransfer.getData('text');
         const field = this.state.fieldDragging;
 
         restoreElementColor(elementID);
+        changeElementColor(event.target, '#fff4e6');
 
         this.setState({
             fields: [
@@ -79,6 +91,11 @@ class FormBuilderDragAndDrop extends React.Component {
         });
     }
 
+    onChangeFieldSetting(fieldName, newProps) {
+        console.log(fieldName);
+        console.log(newProps);
+    }
+
     renderFormBuilder(fields, setAsDraggable = true) {
         let fieldsToDisplay;
         let fieldContainer;
@@ -89,6 +106,7 @@ class FormBuilderDragAndDrop extends React.Component {
                 fieldGroup.fields.map((field) => {
                     field.extraData = { /* eslint-disable-line no-param-reassign */
                         onDragStart: this.onDragStart,
+                        onDragLeave: this.onDragLeave,
                         onClick: this.onClickField,
                     };
 
@@ -123,12 +141,19 @@ class FormBuilderDragAndDrop extends React.Component {
                 <div className="flex-row-item">
                     {this.renderFormBuilder(this.props.fields)}
                 </div>
-                <div className="flex-row-item" onDragOver={this.onDragOver} onDrop={this.onDrop}>
+                <div
+                    className="flex-row-item dynamicForm"
+                    onDragOver={this.onDragOver}
+                    onDrop={this.onDrop}
+                    onDragLeave={this.onDragLeave}
+                >
                     {this.renderFormBuilder(this.state.fields, false)}
                 </div>
                 <div className="flex-row-item">
                     <div className="half-containers">
-                        <FieldSettings {...this.state.fieldSelected}/>
+                        <FieldSettings
+                            fieldSelected={this.state.fieldSelected}
+                            onChange={this.onChangeFieldSetting}/>
 
                     </div>
                     <div className="half-containers">
@@ -153,10 +178,12 @@ class FormBuilderDragAndDrop extends React.Component {
 export default FormBuilderDragAndDrop;
 
 
-FormBuilderDragAndDrop.propTypes = {
-    fields: PropTypes.array
+FormBuilderDragAndDrop
+    .propTypes = {
+    fields: PropTypes.array,
 };
 
-FormBuilderDragAndDrop.defaultProps = {
+FormBuilderDragAndDrop
+    .defaultProps = {
     fields: [],
 };

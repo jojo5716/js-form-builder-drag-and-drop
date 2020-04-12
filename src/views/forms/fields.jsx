@@ -7,6 +7,7 @@ export const FieldDraggableContainer = (
         id,
         children,
         onDragStart,
+        onDragLeave,
         name,
     },
 ) => (
@@ -15,6 +16,7 @@ export const FieldDraggableContainer = (
         className='draggableField'
         draggable='true'
         onDragStart={onDragStart}
+        onDragLeave={onDragLeave}
     >
         <label>{label}</label>
         {children}

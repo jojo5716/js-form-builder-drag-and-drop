@@ -1,18 +1,21 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import FormBuilder from 'js-form-builder';
+
 import {
     FieldContainer,
     groupContainer,
     fieldGroupContainer,
-} from '../views/forms/settings.jsx';
+} from './forms/settings.jsx';
+import { EMPTY_CALLBACK } from '../constants/containers';
 
 const fieldSettingsMap = require('./settings');
 
 class FieldSettings extends React.Component {
     renderFieldSettings() {
-        const { element, type } = this.props;
+        const { element, type } = this.props.fieldSelected;
         const calculateFieldSettings = fieldSettingsMap[ element ][ type ] || fieldSettingsMap[ element ].default;
-        const fieldSettings = calculateFieldSettings(this.props);
+        const fieldSettings = calculateFieldSettings(this.props.fieldSelected);
 
         return (
             <FormBuilder
@@ -25,7 +28,7 @@ class FieldSettings extends React.Component {
     }
 
     render() {
-        const hasFieldSelected = !!Object.keys(this.props).length;
+        const hasFieldSelected = !!this.props.fieldSelected;
         const title = hasFieldSelected ? this.props.name : 'Any field selected';
 
         return (
@@ -39,3 +42,11 @@ class FieldSettings extends React.Component {
 }
 
 export default FieldSettings;
+
+FieldSettings.propTypes = {
+    onChange: PropTypes.func,
+};
+
+FieldSettings.defaultProps = {
+    onChange: EMPTY_CALLBACK,
+};

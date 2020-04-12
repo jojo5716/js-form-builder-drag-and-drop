@@ -1,4 +1,4 @@
-module.exports = ({ name, value }) => ([
+module.exports = ({ name, value, onChange }) => ([
     {
         title: 'Basic',
         fields: [
@@ -13,6 +13,7 @@ module.exports = ({ name, value }) => ([
                     required: true,
                     label: 'Input field name',
                     helpText: 'helpText',
+                    onChange: event => onChange(name, event.target.value),
                 },
                 {
                     element: 'input',
