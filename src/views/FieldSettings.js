@@ -9,13 +9,41 @@ import {
 } from './forms/settings.jsx';
 import { EMPTY_CALLBACK } from '../constants/containers';
 
+const isEqual = require('lodash.isequal');
 const fieldSettingsMap = require('./settings');
 
+
 class FieldSettings extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            fieldSelected: { ...props.fieldSelected },
+        };
+
+        this.onChange = this.onChange.bind(this);
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (!(isEqual(this.props.fieldSelected, prevState.fieldSelected)) && this.props.fieldSelected) {
+            this.setState({
+                fieldSelected: this.props.fieldSelected,
+            });
+        }
+    }
+
+    onChange(fieldName, newProps) {
+        this.setState({
+            fieldSelected: {
+                ...this.state.fieldSelected,
+                [ fieldName ]: newProps,
+            }
+        });
+    }
+
     renderFieldSettings() {
-        const { element, type } = this.props.fieldSelected;
+        const { element, type } = this.state.fieldSelected;
         const calculateFieldSettings = fieldSettingsMap[ element ][ type ] || fieldSettingsMap[ element ].default;
-        const fieldSettings = calculateFieldSettings(this.props.fieldSelected);
+        const fieldSettings = calculateFieldSettings(this.state.fieldSelected);
 
         return (
             <FormBuilder
@@ -23,13 +51,14 @@ class FieldSettings extends React.Component {
                 fieldContainer={FieldContainer}
                 groupContainer={groupContainer}
                 fieldGroupContainer={fieldGroupContainer}
+                onChange={this.onChange}
             />
         );
     }
 
     render() {
-        const hasFieldSelected = !!this.props.fieldSelected;
-        const title = hasFieldSelected ? this.props.name : 'Any field selected';
+        const hasFieldSelected = !!Object.keys(this.state.fieldSelected).length;
+        const title = hasFieldSelected ? this.state.fieldSelected.name : 'Any field selected';
 
         return (
             <React.Fragment>

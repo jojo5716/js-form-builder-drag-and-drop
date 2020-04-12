@@ -18,6 +18,7 @@ import {
 } from './helpers';
 
 
+
 class FormBuilderDragAndDrop extends React.Component {
     constructor(props) {
         super(props);
@@ -31,7 +32,6 @@ class FormBuilderDragAndDrop extends React.Component {
         this.onDragOver = this.onDragOver.bind(this);
         this.onDrop = this.onDrop.bind(this);
         this.onClickField = this.onClickField.bind(this);
-        this.onChangeFieldSetting = this.onChangeFieldSetting.bind(this);
     }
 
     onDragStart(event) {
@@ -91,11 +91,6 @@ class FormBuilderDragAndDrop extends React.Component {
         });
     }
 
-    onChangeFieldSetting(fieldName, newProps) {
-        console.log(fieldName);
-        console.log(newProps);
-    }
-
     renderFormBuilder(fields, setAsDraggable = true) {
         let fieldsToDisplay;
         let fieldContainer;
@@ -109,7 +104,6 @@ class FormBuilderDragAndDrop extends React.Component {
                         onDragLeave: this.onDragLeave,
                         onClick: this.onClickField,
                     };
-
                     return field;
                 });
 
@@ -152,8 +146,7 @@ class FormBuilderDragAndDrop extends React.Component {
                 <div className="flex-row-item">
                     <div className="half-containers">
                         <FieldSettings
-                            fieldSelected={this.state.fieldSelected}
-                            onChange={this.onChangeFieldSetting}/>
+                            fieldSelected={this.state.fieldSelected}/>
 
                     </div>
                     <div className="half-containers">
