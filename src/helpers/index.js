@@ -1,8 +1,10 @@
 module.exports = {
     setDragStateInformation,
     changeElementColor,
+    findFieldByNameInGroups,
     findFieldByName,
     restoreElementColor,
+    getElementById,
 };
 
 function setDragStateInformation(event) {
@@ -24,6 +26,19 @@ function restoreElementColor(elementID) {
     changeElementColor({ currentTarget: draggableElement });
 }
 
+function getElementById(fields, elementID) {
+    const fieldName = elementID.split('-').slice(-1)[ 0 ];
+
+    return findFieldByNameInGroups(fields, fieldName)[0];
+
+}
+
+function findFieldByNameInGroups(fieldGroups, fieldName) {
+    return fieldGroups.map(fieldGroup => fieldGroup.fields.find(field => field.name === fieldName));
+
+}
+
 function findFieldByName(fields, fieldName) {
-    return fields.find(fieldData => fieldData.name === fieldName);
+    return fields.find(field => field.name === fieldName);
+
 }

@@ -7,12 +7,14 @@ import {
     FieldDraggableContainer,
     FieldContainer,
     formErrorContainer,
+    groupContainer,
 } from './views/fields.jsx';
 import {
     setDragStateInformation,
     changeElementColor,
     findFieldByName,
     restoreElementColor,
+    getElementById,
 } from './helpers';
 
 
@@ -22,6 +24,7 @@ class FormBuilderDragAndDrop extends React.Component {
         this.state = {
             fields: [],
             fieldSelected: null,
+            fieldDragging: null,
         };
 
         this.onDragStart = this.onDragStart.bind(this);
@@ -31,6 +34,13 @@ class FormBuilderDragAndDrop extends React.Component {
     }
 
     onDragStart(event) {
+        const elementID = event.currentTarget.id;
+        const field = getElementById(this.props.fields, elementID);
+
+        this.setState({
+            fieldDragging: field,
+        });
+
         setDragStateInformation(event);
         changeElementColor(event, 'yellow');
     }
@@ -41,8 +51,7 @@ class FormBuilderDragAndDrop extends React.Component {
 
     onDrop(event) {
         const elementID = event.dataTransfer.getData('text');
-        const fieldName = elementID.split('-').slice(-1)[ 0 ];
-        const field = findFieldByName(this.props.fields, fieldName);
+        const field = this.state.fieldDragging;
 
         restoreElementColor(elementID);
 
@@ -56,6 +65,7 @@ class FormBuilderDragAndDrop extends React.Component {
                     label: `${field.name}${Date.now()}`,
                 },
             ],
+            fieldDragging: null,
         });
     }
 
@@ -72,13 +82,17 @@ class FormBuilderDragAndDrop extends React.Component {
         if (setAsDraggable) {
             fieldContainer = FieldDraggableContainer;
             // Attach onDragStart event on each field
-            fieldsToDisplay = fields.map((field) => {
-                field.extraData = { /* eslint-disable-line no-param-reassign */
-                    onDragStart: this.onDragStart,
-                    onClick: this.onClickField,
-                };
+            fieldsToDisplay = fields.map((fieldGroup) => {
+                fieldGroup.fields.map((field) => {
+                    field.extraData = { /* eslint-disable-line no-param-reassign */
+                        onDragStart: this.onDragStart,
+                        onClick: this.onClickField,
+                    };
 
-                return field;
+                    return field;
+                });
+
+                return fieldGroup;
             });
         } else {
             fieldContainer = FieldContainer;
@@ -90,10 +104,11 @@ class FormBuilderDragAndDrop extends React.Component {
             <FormBuilder
                 fields={fieldsToDisplay}
                 createFormElement={false}
-                fieldContainer={fieldContainer}
-                formErrorContainer={formErrorContainer}
                 hasToSubmit={false}
                 showSubmitButton={hasToShowSubmitButton}
+                fieldContainer={fieldContainer}
+                formErrorContainer={formErrorContainer}
+                groupContainer={groupContainer}
             />
         );
     }

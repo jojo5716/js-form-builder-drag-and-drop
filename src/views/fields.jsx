@@ -29,3 +29,16 @@ export const formErrorContainer = ({ children }) => (
         {children}
     </div>
 );
+
+/**
+ * Render group into a custom html block.
+ */
+export const groupContainer = ({ children, title, content }) => (
+    <div className="group-container">
+        <fieldset>
+            <legend>{title}</legend>
+            <p>{content}</p>
+            {children}
+        </fieldset>
+    </div>
+);
