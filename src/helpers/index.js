@@ -1,6 +1,8 @@
 module.exports = {
     setDragStateInformation,
     changeElementColor,
+    findFieldByName,
+    restoreElementColor,
 };
 
 function setDragStateInformation(event) {
@@ -14,4 +16,14 @@ function changeElementColor(event, color = 'red') {
         .currentTarget
         .style
         .backgroundColor = color;
+}
+
+function restoreElementColor(elementID) {
+    const draggableElement = document.getElementById(elementID);
+
+    changeElementColor({ currentTarget: draggableElement });
+}
+
+function findFieldByName(fields, fieldName) {
+    return fields.find(fieldData => fieldData.name === fieldName);
 }

@@ -13,8 +13,8 @@ export const FieldDraggableContainer = ({ label, id, children, onDragStart, name
     </div>
 );
 
-export const FieldContainer = ({ label, children, errorMessage }) => (
-    <div>
+export const FieldContainer = ({ label, name, children, errorMessage, onClick }) => (
+    <div className="field-generated" onClick={() => onClick(name)}>
         <label>{label}</label>
         {children}
         {errorMessage ? <div className="error">{errorMessage}</div> : null}

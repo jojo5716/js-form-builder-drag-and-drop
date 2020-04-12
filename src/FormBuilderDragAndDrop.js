@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import FormBuilder from 'js-form-builder';
 
+import FieldSettings from './FieldSettings';
 import {
     FieldDraggableContainer,
     FieldContainer,
@@ -10,6 +11,8 @@ import {
 import {
     setDragStateInformation,
     changeElementColor,
+    findFieldByName,
+    restoreElementColor,
 } from './helpers';
 
 
@@ -18,11 +21,13 @@ class FormBuilderDragAndDrop extends React.Component {
         super(props);
         this.state = {
             fields: [],
+            fieldSelected: null,
         };
 
         this.onDragStart = this.onDragStart.bind(this);
         this.onDragOver = this.onDragOver.bind(this);
         this.onDrop = this.onDrop.bind(this);
+        this.onClickField = this.onClickField.bind(this);
     }
 
     onDragStart(event) {
@@ -35,12 +40,11 @@ class FormBuilderDragAndDrop extends React.Component {
     }
 
     onDrop(event) {
-        const id = event.dataTransfer.getData('text');
-        const fieldName = id.split('-').slice(-1)[ 0 ];
-        const field = this.props.fields.find(fieldData => fieldData.name === fieldName);
-        const draggableElement = document.getElementById(id);
+        const elementID = event.dataTransfer.getData('text');
+        const fieldName = elementID.split('-').slice(-1)[ 0 ];
+        const field = findFieldByName(this.props.fields, fieldName);
 
-        changeElementColor({ currentTarget: draggableElement });
+        restoreElementColor(elementID);
 
         this.setState({
             fields: [
@@ -55,6 +59,13 @@ class FormBuilderDragAndDrop extends React.Component {
         });
     }
 
+    onClickField(fieldName) {
+        this.setState({
+            fieldSelected: findFieldByName(this.state.fields, fieldName),
+        });
+
+    }
+
     renderFormBuilder(fields, setAsDraggable = true) {
         let fieldsToDisplay;
         let fieldContainer;
@@ -64,6 +75,7 @@ class FormBuilderDragAndDrop extends React.Component {
             fieldsToDisplay = fields.map((field) => {
                 field.extraData = { /* eslint-disable-line no-param-reassign */
                     onDragStart: this.onDragStart,
+                    onClick: this.onClickField,
                 };
 
                 return field;
@@ -72,6 +84,7 @@ class FormBuilderDragAndDrop extends React.Component {
             fieldContainer = FieldContainer;
             fieldsToDisplay = fields;
         }
+        const hasToShowSubmitButton = !setAsDraggable && !!fieldsToDisplay.length;
 
         return (
             <FormBuilder
@@ -80,28 +93,24 @@ class FormBuilderDragAndDrop extends React.Component {
                 fieldContainer={fieldContainer}
                 formErrorContainer={formErrorContainer}
                 hasToSubmit={false}
+                showSubmitButton={hasToShowSubmitButton}
             />
         );
     }
 
     renderPage() {
         return (
-            <React.Fragment>
-                <div className="split left">
+            <div className="flex-row-container">
+                <div className="flex-row-item">
                     {this.renderFormBuilder(this.props.fields)}
                 </div>
-
-                <div className="split right">
-                    <div
-                        className="centered"
-                        onDragOver={this.onDragOver}
-                        onDrop={this.onDrop}
-                    >
-                        {this.renderFormBuilder(this.state.fields, false)}
-
-                    </div>
+                <div className="flex-row-item" onDragOver={this.onDragOver} onDrop={this.onDrop}>
+                    {this.renderFormBuilder(this.state.fields, false)}
                 </div>
-            </React.Fragment>
+                <div className="flex-row-item">
+                    {this.state.fieldSelected ? <FieldSettings {...this.state.fieldSelected}/> : null}
+                </div>
+            </div>
         );
     }
 
