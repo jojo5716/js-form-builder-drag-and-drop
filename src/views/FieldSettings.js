@@ -9,7 +9,6 @@ import {
 } from './forms/settings.jsx';
 import { EMPTY_CALLBACK } from '../constants/containers';
 
-const isEqual = require('lodash.isequal');
 const fieldSettingsMap = require('./settings');
 
 
@@ -41,6 +40,7 @@ class FieldSettings extends React.Component {
                 groupContainer={groupContainer}
                 fieldGroupContainer={fieldGroupContainer}
                 onChange={this.onChange}
+                showSubmitButton={false}
             />
         );
     }
