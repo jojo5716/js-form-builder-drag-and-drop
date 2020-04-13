@@ -18,7 +18,6 @@ import {
 } from './helpers';
 
 
-
 class FormBuilderDragAndDrop extends React.Component {
     constructor(props) {
         super(props);
@@ -32,6 +31,7 @@ class FormBuilderDragAndDrop extends React.Component {
         this.onDragOver = this.onDragOver.bind(this);
         this.onDrop = this.onDrop.bind(this);
         this.onClickField = this.onClickField.bind(this);
+        this.onChangeFieldSettings = this.onChangeFieldSettings.bind(this);
     }
 
     onDragStart(event) {
@@ -91,6 +91,23 @@ class FormBuilderDragAndDrop extends React.Component {
         });
     }
 
+    onChangeFieldSettings(fieldValue) {
+        const newFieldValues = this.state.fields.map((field) => {
+            let clonedField;
+            if (field.name === this.state.fieldSelected.name) {
+                clonedField = fieldValue;
+            } else {
+                clonedField = { ...field };
+            }
+            return clonedField;
+        });
+
+        this.setState({
+            fieldSelected: fieldValue,
+            fields: newFieldValues,
+        });
+    }
+
     renderFormBuilder(fields, setAsDraggable = true) {
         let fieldsToDisplay;
         let fieldContainer;
@@ -146,7 +163,9 @@ class FormBuilderDragAndDrop extends React.Component {
                 <div className="flex-row-item">
                     <div className="half-containers">
                         <FieldSettings
-                            fieldSelected={this.state.fieldSelected}/>
+                            fieldSelected={this.state.fieldSelected}
+                            onChangeFieldSettings={this.onChangeFieldSettings}
+                        />
 
                     </div>
                     <div className="half-containers">

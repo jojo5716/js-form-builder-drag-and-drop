@@ -31,13 +31,13 @@ class FieldSettings extends React.Component {
         }
     }
 
-    onChange(fieldName, newProps) {
-        this.setState({
-            fieldSelected: {
-                ...this.state.fieldSelected,
-                [ fieldName ]: newProps,
-            }
-        });
+    onChange(attributeToChange, newValue) {
+        const newFieldState = {
+            ...this.state.fieldSelected,
+            [ attributeToChange ]: newValue,
+        };
+
+        this.props.onChangeFieldSettings(newFieldState);
     }
 
     renderFieldSettings() {
@@ -74,8 +74,10 @@ export default FieldSettings;
 
 FieldSettings.propTypes = {
     onChange: PropTypes.func,
+    onChangeFieldSettings: PropTypes.func,
 };
 
 FieldSettings.defaultProps = {
     onChange: EMPTY_CALLBACK,
+    onChangeFieldSettings: EMPTY_CALLBACK,
 };

@@ -1,6 +1,5 @@
 module.exports = [
     {
-        id: 'input_text',
         element: 'input',
         type: 'text',
         name: 'input_text',
@@ -11,7 +10,6 @@ module.exports = [
         required: true,
     },
     {
-        id: 'input_email',
         element: 'input',
         type: 'email',
         name: 'input_email',
@@ -22,7 +20,6 @@ module.exports = [
         required: true,
     },
     {
-        id: 'input_color',
         element: 'input',
         type: 'color',
         name: 'input_color',
@@ -33,7 +30,6 @@ module.exports = [
         required: true,
     },
     {
-        id: 'input_number',
         element: 'input',
         type: 'number',
         name: 'input_number',
