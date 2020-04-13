@@ -78,7 +78,7 @@ module.exports = (props) => {
                     {
                         element: 'input',
                         type: 'checkbox',
-                        name: 'readonly',
+                        name: 'readOnly',
                         checked: props.readOnly,
                         className: 'form-control',
                         label: 'Read only',

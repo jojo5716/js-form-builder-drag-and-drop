@@ -150,6 +150,8 @@ class FormBuilderDragAndDrop extends React.Component {
         return (
             <div className="flex-row-container">
                 <div className="flex-row-item">
+                    <h1>Available fields</h1>
+                    <p>Drag and drop fields to build a form</p>
                     {this.renderFormBuilder(this.props.fields)}
                 </div>
                 <div
@@ -158,6 +160,7 @@ class FormBuilderDragAndDrop extends React.Component {
                     onDrop={this.onDrop}
                     onDragLeave={this.onDragLeave}
                 >
+                    <p>Your form ({this.state.fields.length}) fields</p>
                     {this.renderFormBuilder(this.state.fields, false)}
                 </div>
                 <div className="flex-row-item">

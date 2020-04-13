@@ -13,7 +13,7 @@ function setDragStateInformation(event) {
         .setData('text/plain', event.target.id);
 }
 
-function changeElementColor(event, color = 'red') {
+function changeElementColor(event, color = '#e2dfdf') {
     event /* eslint-disable-line no-param-reassign */
         .style
         .backgroundColor = color;

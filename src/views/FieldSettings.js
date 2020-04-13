@@ -16,24 +16,13 @@ const fieldSettingsMap = require('./settings');
 class FieldSettings extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            fieldSelected: { ...props.fieldSelected },
-        };
 
         this.onChange = this.onChange.bind(this);
     }
 
-    componentDidUpdate(prevProps, prevState) {
-        if (!(isEqual(this.props.fieldSelected, prevState.fieldSelected)) && this.props.fieldSelected) {
-            this.setState({
-                fieldSelected: this.props.fieldSelected,
-            });
-        }
-    }
-
     onChange(attributeToChange, newValue) {
         const newFieldState = {
-            ...this.state.fieldSelected,
+            ...this.props.fieldSelected,
             [ attributeToChange ]: newValue,
         };
 
@@ -41,9 +30,9 @@ class FieldSettings extends React.Component {
     }
 
     renderFieldSettings() {
-        const { element, type } = this.state.fieldSelected;
+        const { element, type } = this.props.fieldSelected;
         const calculateFieldSettings = fieldSettingsMap[ element ][ type ] || fieldSettingsMap[ element ].default;
-        const fieldSettings = calculateFieldSettings(this.state.fieldSelected);
+        const fieldSettings = calculateFieldSettings(this.props.fieldSelected);
 
         return (
             <FormBuilder
@@ -57,8 +46,8 @@ class FieldSettings extends React.Component {
     }
 
     render() {
-        const hasFieldSelected = !!Object.keys(this.state.fieldSelected).length;
-        const title = hasFieldSelected ? this.state.fieldSelected.name : 'Any field selected';
+        const hasFieldSelected = this.props.fieldSelected && !!Object.keys(this.props.fieldSelected).length;
+        const title = hasFieldSelected ? this.props.fieldSelected.name : 'Any field selected';
 
         return (
             <React.Fragment>
